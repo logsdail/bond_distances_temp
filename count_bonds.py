@@ -7,7 +7,7 @@ def read_structure(filename=None):
         from ase.io import read
         return read(filename)
 
-def get_distance_matrix(atoms=None, verbose=True):
+def get_distance_matrix(atoms=None, verbose=False):
     if atoms==None:
         raise Exception("Sorry, no atoms object provided?")
     else:
@@ -24,7 +24,8 @@ def get_distance_matrix(atoms=None, verbose=True):
                 else:
                     # This provides a top right (?) matrix of distances, with -1 for invalid entries
                     # To make complete, could also set distance_matrix[j,i], but then we'd double count
-                    print(i,j,np.linalg.norm(atoms.positions[i]-atoms.positions[j]))
+                    if verbose:
+                        print(i,j,np.linalg.norm(atoms.positions[i]-atoms.positions[j]))
                     i_distances.append(np.linalg.norm(atoms.positions[i]-atoms.positions[j]))
             distance_matrix.append(i_distances)
         return distance_matrix
